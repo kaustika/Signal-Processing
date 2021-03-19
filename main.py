@@ -19,12 +19,11 @@ def find_contour_proportions(filename: str) -> float:
 
     contours, _ = cv.findContours(closed_image, mode=cv.RETR_LIST, method=cv.CHAIN_APPROX_SIMPLE)
     sorted_contours = sorted(contours, key=lambda x: cv.contourArea(x), reverse=True)
-    big_contours = sorted_contours[2:3]
+    contour = sorted_contours[2]
 
     contours_image = raw_image.copy()
-    for c in big_contours:
-        x, y, w, h = cv.boundingRect(c)
-        cv.rectangle(contours_image, (x, y), (x + w, y + h), (0, 255, 0), thickness=15)
+    x, y, w, h = cv.boundingRect(contour)
+    cv.rectangle(contours_image, (x, y), (x + w, y + h), (0, 255, 0), thickness=15)
     
     return w / h
 
